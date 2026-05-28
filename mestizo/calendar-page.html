@@ -8,24 +8,14 @@
 ║  LANDING_URL   →  URL of the main landing page (for logo link)           ║
 ║  THANKYOU_URL  →  URL of the Thank You page                              ║
 ║                                                                           ║
-║  CALENDAR_EMBED_HTML                                                      ║
-║  ───────────────────────────────────────────────────────────────────────  ║
-║  Paste your GHL / Calendly embed code as a string inside backticks.      ║
-║  The placeholder below will be replaced with your embed automatically.   ║
-║                                                                           ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
 -->
 <script>
 var MEZTIZO_CONFIG = {
 
-  /* ── Step 1: Page URLs ─────────────────────────────── */
+  /* ── Page URLs ─────────────────────────────── */
   LANDING_URL:   "/",              /* ← Main landing page URL    */
   THANKYOU_URL:  "/thank-you",     /* ← Thank You page URL       */
-
-  /* ── Step 2: Paste your calendar embed HTML here ───── */
-  /* Example for GHL: '<iframe src="https://..." ...></iframe>'  */
-  /* Example for Calendly: the script + div snippet             */
-  CALENDAR_EMBED_HTML: "",         /* ← PASTE EMBED CODE HERE   */
 
 };
 </script>
@@ -68,19 +58,29 @@ var MEZTIZO_CONFIG = {
   color: var(--txt1); background: var(--bg0);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 #mz-cal h1, #mz-cal h2, #mz-cal h3 {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 700; line-height: 1.15; color: var(--txt1);
 }
-#mz-cal h1 { font-size: clamp(2rem,4.5vw,3.6rem); }
-#mz-cal h2 { font-size: clamp(1.6rem,3vw,2.4rem); }
-#mz-cal h3 { font-size: clamp(1.1rem,2vw,1.5rem); }
-#mz-cal p  { color: var(--txt2); line-height: 1.8; }
+#mz-cal h1 { font-size: clamp(1.75rem, 4vw, 3.2rem); }
+#mz-cal h2 { font-size: clamp(1.4rem, 2.8vw, 2.2rem); }
+#mz-cal h3 { font-size: clamp(1rem, 1.8vw, 1.4rem); }
+#mz-cal p  { color: var(--txt2); line-height: 1.8; font-size: clamp(.88rem, 1.3vw, .98rem); }
 #mz-cal a  { color: var(--gold); text-decoration: none; transition: var(--ease); }
 
-#mz-cal .mz-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+#mz-cal .mz-wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+/* PILL */
+#mz-cal .mz-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--gold-lt); border: 1px solid var(--bdr2);
+  padding: 6px 18px; border-radius: 100px; background: rgba(200,168,75,.07);
+  margin-bottom: 18px;
+}
 
 /* BUTTONS */
 #mz-cal .mz-btn {
@@ -89,6 +89,7 @@ var MEZTIZO_CONFIG = {
   letter-spacing: .07em; text-transform: uppercase; text-decoration: none;
   border: none; border-radius: 6px; cursor: pointer;
   transition: var(--ease); -webkit-appearance: none; appearance: none;
+  min-height: 44px;
 }
 #mz-cal .mz-btn-ghost {
   background: transparent; color: var(--gold);
@@ -102,25 +103,25 @@ var MEZTIZO_CONFIG = {
 /* ── MINI NAV ── */
 #mz-cal-nav {
   position: sticky; top: 0; z-index: 900;
-  background: rgba(6,6,10,.94);
+  background: rgba(6,6,10,.95);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--bdr);
-  padding: 0 24px;
+  padding: 0 32px;
 }
 #mz-cal-nav .mz-nav-inner {
   max-width: 1100px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 72px;
+  height: 70px;
 }
 #mz-cal-nav .mz-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 1.45rem; font-weight: 800;
+  font-size: 1.4rem; font-weight: 800;
   letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
   background: var(--gold-grd);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 #mz-cal-nav .mz-step-label {
-  font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
   color: var(--txt3);
 }
 
@@ -136,30 +137,30 @@ var MEZTIZO_CONFIG = {
 }
 #mz-cal-progress .mz-progress-steps {
   display: flex; justify-content: center; gap: 32px;
-  padding: 14px 24px;
+  padding: 13px 24px;
   background: var(--bg1); border-bottom: 1px solid var(--bdr);
 }
 #mz-cal-progress .mz-pstep {
   display: flex; align-items: center; gap: 8px;
-  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  font-size: .7rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--txt3);
 }
-#mz-cal-progress .mz-pstep.done  { color: var(--gold-lt); }
-#mz-cal-progress .mz-pstep.active{ color: var(--gold); }
+#mz-cal-progress .mz-pstep.done   { color: var(--gold-lt); }
+#mz-cal-progress .mz-pstep.active { color: var(--gold); }
 #mz-cal-progress .mz-pstep .ps-num {
   width: 22px; height: 22px;
   border: 1px solid currentColor;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: .65rem;
+  font-size: .63rem;
 }
-#mz-cal-progress .mz-pstep.done .ps-num  { background: rgba(200,168,75,.15); border-color: var(--gold); color: var(--gold); }
-#mz-cal-progress .mz-pstep.active .ps-num{ background: var(--gold-grd); border-color: transparent; color: #120E00; }
+#mz-cal-progress .mz-pstep.done .ps-num   { background: rgba(200,168,75,.15); border-color: var(--gold); color: var(--gold); }
+#mz-cal-progress .mz-pstep.active .ps-num { background: var(--gold-grd); border-color: transparent; color: #120E00; font-weight: 700; }
 
 /* ── HERO AREA ── */
 #mz-cal-hero {
   background: var(--bg0); position: relative; overflow: hidden;
-  padding: 70px 24px 60px;
+  padding: 64px 32px 52px;
   text-align: center;
 }
 #mz-cal-hero::before {
@@ -173,55 +174,48 @@ var MEZTIZO_CONFIG = {
   width: 700px; height: 500px; pointer-events: none;
   background: radial-gradient(ellipse, rgba(200,168,75,.08) 0%, transparent 68%);
 }
-#mz-cal-hero .mz-cal-hero-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+#mz-cal-hero .mz-cal-hero-inner { position: relative; z-index: 2; max-width: 740px; margin: 0 auto; }
 #mz-cal-hero .mz-success-icon {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 72px; height: 72px;
+  width: 68px; height: 68px;
   background: rgba(200,168,75,.1); border: 1px solid var(--bdr2);
-  border-radius: 50%; font-size: 2.2rem; margin-bottom: 22px;
+  border-radius: 50%; color: var(--gold); margin-bottom: 20px;
 }
-#mz-cal-hero .mz-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--gold-lt); border: 1px solid var(--bdr2);
-  padding: 6px 18px; border-radius: 100px; background: rgba(200,168,75,.07);
-  margin-bottom: 18px;
-}
-#mz-cal-hero h1 { margin-bottom: 18px; }
+#mz-cal-hero h1 { margin-bottom: 16px; }
 #mz-cal-hero h1 .gold-text {
   background: var(--gold-grd);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 #mz-cal-hero p {
-  font-size: 1.02rem; max-width: 600px; margin: 0 auto; color: var(--txt2); line-height: 1.8;
+  max-width: 580px; margin: 0 auto;
 }
 
 /* ── MAIN CONTENT ── */
 #mz-cal-body {
-  background: var(--bg1); padding: 60px 24px 80px;
+  background: var(--bg1); padding: 56px 32px 72px;
 }
 #mz-cal-body .mz-cal-grid {
   max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start;
+  display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start;
 }
 
 /* ── WHAT HAPPENS SIDEBAR ── */
 #mz-cal-sidebar h3 {
-  font-size: 1.1rem; margin-bottom: 24px; color: var(--txt1);
+  font-size: 1.05rem; margin-bottom: 22px; color: var(--txt1);
 }
 #mz-cal-sidebar .mz-what-list {
-  list-style: none; display: flex; flex-direction: column; gap: 18px;
+  list-style: none; display: flex; flex-direction: column; gap: 16px;
 }
 #mz-cal-sidebar .mz-what-list li {
-  display: flex; align-items: flex-start; gap: 14px;
-  font-size: .9rem; color: var(--txt2); line-height: 1.6;
+  display: flex; align-items: flex-start; gap: 13px;
+  font-size: .88rem; color: var(--txt2); line-height: 1.6;
 }
 #mz-cal-sidebar .mz-what-list li::before {
   content: '✓';
   display: flex; align-items: center; justify-content: center;
-  min-width: 24px; height: 24px;
+  min-width: 22px; height: 22px;
   background: rgba(200,168,75,.1); border: 1px solid var(--bdr2);
-  border-radius: 50%; font-size: .65rem; font-weight: 700; color: var(--gold);
+  border-radius: 50%; font-size: .63rem; font-weight: 700; color: var(--gold);
   margin-top: 1px; flex-shrink: 0;
 }
 #mz-cal-sidebar .mz-what-list li strong { color: var(--txt1); }
@@ -229,17 +223,17 @@ var MEZTIZO_CONFIG = {
 #mz-cal-sidebar .mz-trust-badge {
   background: var(--bgcard); border: 1px solid var(--bdr);
   border-radius: var(--rad); padding: 20px 18px;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 #mz-cal-sidebar .mz-trust-badge .tb-title {
-  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--gold-dk); margin-bottom: 12px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold-dk); margin-bottom: 14px;
 }
 #mz-cal-sidebar .mz-trust-badge .tb-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: .82rem; color: var(--txt3); padding: 5px 0;
+  display: flex; align-items: center; gap: 10px;
+  font-size: .82rem; color: var(--txt3); padding: 6px 0;
 }
-#mz-cal-sidebar .mz-trust-badge .tb-icon { color: var(--gold); font-size: .85rem; }
+#mz-cal-sidebar .mz-trust-badge .tb-icon { color: var(--gold); flex-shrink: 0; }
 
 /* ── CALENDAR EMBED AREA ── */
 #mz-cal-embed-wrap {
@@ -249,28 +243,26 @@ var MEZTIZO_CONFIG = {
 }
 #mz-cal-embed-wrap::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--gold-grd);
+  background: var(--gold-grd); z-index: 1;
 }
 #mz-cal-embed-inner {
-  padding: 0; min-height: 580px;
-  display: flex; align-items: center; justify-content: center;
+  padding: 0; min-height: 620px;
 }
-#mz-cal-embed-inner .mz-embed-placeholder {
-  text-align: center; padding: 48px 32px;
-  display: flex; flex-direction: column; align-items: center; gap: 14px;
+#mz-cal-embed-inner iframe {
+  width: 100% !important;
+  min-height: 620px;
+  border: none;
+  display: block;
 }
-#mz-cal-embed-inner .mz-embed-placeholder .ep-icon { font-size: 3.5rem; opacity: .25; }
-#mz-cal-embed-inner .mz-embed-placeholder .ep-tag {
-  font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--gold-dk);
-}
-#mz-cal-embed-inner .mz-embed-placeholder h3 { font-size: 1.3rem; color: var(--txt2); font-family: 'Inter', sans-serif; font-weight: 600; }
-#mz-cal-embed-inner .mz-embed-placeholder p { font-size: .85rem; color: var(--txt3); max-width: 280px; }
 
 /* ── FOOTER ── */
 #mz-cal-footer {
   background: #040407; border-top: 1px solid var(--bdr);
-  padding: 28px 24px; text-align: center;
+  padding: 32px 32px 28px; text-align: center;
+}
+#mz-cal-footer .mz-ft-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding-bottom: 24px; border-bottom: 1px solid var(--bdr); margin-bottom: 20px;
 }
 #mz-cal-footer .mz-ft-logo {
   font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 800;
@@ -279,20 +271,29 @@ var MEZTIZO_CONFIG = {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   display: block; margin-bottom: 6px;
 }
-#mz-cal-footer p { font-size: .75rem; color: var(--txt3); }
+#mz-cal-footer .mz-ft-tag { font-size: .78rem; color: var(--txt3); }
+#mz-cal-footer .mz-ft-copy { font-size: .72rem; color: var(--txt3); margin-top: 8px; }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 860px) {
-  #mz-cal-body .mz-cal-grid { grid-template-columns: 1fr; gap: 36px; }
+@media (max-width: 900px) {
+  #mz-cal-body .mz-cal-grid {
+    grid-template-columns: 1fr; gap: 36px;
+  }
   #mz-cal-sidebar { order: 2; }
   #mz-cal-embed-wrap { order: 1; }
   #mz-cal-progress .mz-progress-steps { gap: 16px; }
 }
-@media (max-width: 480px) {
-  #mz-cal-hero { padding: 52px 20px 44px; }
-  #mz-cal-body  { padding: 44px 20px 60px; }
-  #mz-cal-progress .mz-progress-steps { gap: 10px; }
+@media (max-width: 600px) {
+  #mz-cal-nav         { padding: 0 20px; }
+  #mz-cal-nav .mz-step-label { display: none; }
+  #mz-cal-hero        { padding: 48px 20px 40px; }
+  #mz-cal-body        { padding: 40px 20px 56px; }
+  #mz-cal-footer      { padding: 28px 20px; }
+  #mz-cal .mz-wrap    { padding: 0 20px; }
+  #mz-cal-progress .mz-progress-steps { gap: 10px; padding: 12px 16px; }
   #mz-cal-progress .mz-pstep span { display: none; }
+  #mz-cal-embed-inner,
+  #mz-cal-embed-inner iframe { min-height: 520px; }
 }
 </style>
 
@@ -311,7 +312,9 @@ var MEZTIZO_CONFIG = {
     <div class="mz-progress-fill"></div>
     <div class="mz-progress-steps">
       <div class="mz-pstep done">
-        <div class="ps-num">✓</div>
+        <div class="ps-num">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        </div>
         <span>Your Details</span>
       </div>
       <div class="mz-pstep active">
@@ -324,7 +327,9 @@ var MEZTIZO_CONFIG = {
   <!-- ╔═══ HERO ═══╗ -->
   <section id="mz-cal-hero">
     <div class="mz-cal-hero-inner">
-      <div class="mz-success-icon">✅</div>
+      <div class="mz-success-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      </div>
       <div class="mz-pill">Almost There!</div>
       <h1>
         Final Step: Schedule Your<br>
@@ -360,23 +365,37 @@ var MEZTIZO_CONFIG = {
         </ul>
         <div class="mz-trust-badge">
           <div class="tb-title">You're in Good Hands</div>
-          <div class="tb-item"><span class="tb-icon">⭐</span> El Paso's #1 Rated Contractor</div>
-          <div class="tb-item"><span class="tb-icon">🔒</span> 100% No-Pressure Guarantee</div>
-          <div class="tb-item"><span class="tb-icon">💰</span> Financing Options Available</div>
-          <div class="tb-item"><span class="tb-icon">📞</span> Real People, Real Answers</div>
+          <div class="tb-item">
+            <span class="tb-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            El Paso's #1 Rated Contractor
+          </div>
+          <div class="tb-item">
+            <span class="tb-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            </span>
+            100% No-Pressure Guarantee
+          </div>
+          <div class="tb-item">
+            <span class="tb-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+            </span>
+            Financing Options Available
+          </div>
+          <div class="tb-item">
+            <span class="tb-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </span>
+            Real People, Real Answers
+          </div>
         </div>
       </aside>
 
       <!-- Calendar Embed -->
       <div id="mz-cal-embed-wrap">
         <div id="mz-cal-embed-inner">
-          <!-- Embed code injected by script below, or shows placeholder -->
-          <div class="mz-embed-placeholder" id="mz-embed-placeholder">
-            <div class="ep-icon">📅</div>
-            <div class="ep-tag">Calendar Embed</div>
-            <h3>Your booking calendar<br>will appear here</h3>
-            <p>Paste your GHL or Calendly embed code into MEZTIZO_CONFIG.CALENDAR_EMBED_HTML above</p>
-          </div>
+          <iframe src="https://link.trulybedesiredagency.com/widget/booking/WDPEfnrCk3X5FiasiTTv" style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="5Lzwh0rwnYU8JiIWvsSd_1779963431958"></iframe>
         </div>
       </div>
 
@@ -385,35 +404,23 @@ var MEZTIZO_CONFIG = {
 
   <!-- ╔═══ FOOTER ═══╗ -->
   <footer id="mz-cal-footer">
-    <span class="mz-ft-logo">Meztizo</span>
-    <p>El Paso's Most Trusted Kitchen &amp; Bathroom Remodeling Contractor · El Paso, TX &amp; Las Cruces, NM</p>
-    <p style="margin-top:6px;">© 2025 Meztizo. All rights reserved.</p>
+    <div class="mz-ft-inner">
+      <span class="mz-ft-logo">Meztizo</span>
+      <p class="mz-ft-tag">El Paso's Most Trusted Kitchen &amp; Bathroom Remodeling Contractor based in El Paso and Las Cruces.</p>
+    </div>
+    <p class="mz-ft-copy">© <span id="mz-cal-year"></span> Meztizo. All rights reserved. El Paso, TX &amp; Las Cruces, NM.</p>
   </footer>
 
 </div><!-- end #mz-cal -->
 
+<script src="https://link.trulybedesiredagency.com/js/form_embed.js" type="text/javascript"></script>
+
 <script>
 (function() {
-  /* ── Set logo link ── */
   var logoLink = document.getElementById('mz-cal-logo-link');
   if (logoLink) logoLink.href = MEZTIZO_CONFIG.LANDING_URL;
 
-  /* ── Inject calendar embed if provided ── */
-  var embedHtml = MEZTIZO_CONFIG.CALENDAR_EMBED_HTML;
-  var embedInner = document.getElementById('mz-cal-embed-inner');
-  var placeholder = document.getElementById('mz-embed-placeholder');
-  if (embedHtml && embedHtml.trim() !== '' && embedInner) {
-    embedInner.innerHTML = embedHtml;
-    /* make embed fill container */
-    embedInner.style.display = 'block';
-    embedInner.style.padding = '0';
-    var iframes = embedInner.querySelectorAll('iframe');
-    iframes.forEach(function(f) {
-      f.style.width = '100%';
-      f.style.minHeight = '580px';
-      f.style.border = 'none';
-      f.style.display = 'block';
-    });
-  }
+  var yr = document.getElementById('mz-cal-year');
+  if (yr) yr.textContent = new Date().getFullYear();
 })();
 </script>
