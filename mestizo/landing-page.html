@@ -31,13 +31,11 @@ var MEZTIZO_CONFIG = {
 
   /* ── Step 3: Paste your photo URLs here ─────────────────── */
   IMAGES: {
+    HERO:      "",   /* ← Hero section photo      */
     KITCHEN:   "",   /* ← Kitchen section photo   */
     BATHROOM:  "",   /* ← Bathroom section photo  */
     SERVICES:  "",   /* ← Services section photo  */
     WHY:       "",   /* ← Why Meztizo photo       */
-    REVIEWS:   "",   /* ← Reviews section photo   */
-    COMMUNITY: "",   /* ← Community photo         */
-    FINANCING: "",   /* ← Financing section photo */
   },
 
 };
@@ -243,8 +241,8 @@ var MEZTIZO_CONFIG = {
 /* Mobile-only CTA in nav — hidden on desktop */
 #mz-nav .mz-nav-mobile-cta {
   display: none;
-  font-size: .65rem; padding: 10px 14px;
-  min-height: 48px; max-width: 108px;
+  font-size: .68rem; padding: 10px 20px;
+  min-height: 48px; min-width: 148px;
   white-space: normal; text-align: center; line-height: 1.3;
 }
 
@@ -304,6 +302,9 @@ var MEZTIZO_CONFIG = {
 }
 #mz-hero .mz-dot {
   width: 3px; height: 3px; background: var(--gold-dk); border-radius: 50%; flex-shrink: 0;
+}
+#mz-hero .mz-hero-img {
+  margin-top: 20px;
 }
 
 /* ══════════  TRUST BAR  ══════════ */
@@ -393,6 +394,15 @@ var MEZTIZO_CONFIG = {
 #mz-page .mz-trust-micro {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
   font-size: .7rem; color: var(--txt3); letter-spacing: .07em; margin-top: 14px;
+}
+
+/* ── SPLIT IMAGE: desktop/mobile visibility ── */
+#mz-page .mz-img-col-mobile {
+  display: none;
+  margin: 20px 0 24px;
+}
+#mz-page .mz-img-col-mobile .mz-img-ph {
+  aspect-ratio: 4/3;
 }
 
 /* ══════════  KITCHEN  ══════════ */
@@ -571,6 +581,11 @@ var MEZTIZO_CONFIG = {
   text-align: center;
   font-size: .72rem; color: var(--txt3);
 }
+#mz-footer .mz-ft-terms {
+  text-align: center;
+  font-size: .65rem; color: var(--txt3); opacity: .7;
+  max-width: 600px; margin: 10px auto 0; line-height: 1.55;
+}
 
 /* ══════════  RESPONSIVE  ══════════ */
 @media (max-width: 1024px) {
@@ -596,9 +611,12 @@ var MEZTIZO_CONFIG = {
   /* Show mobile CTA button */
   #mz-nav .mz-nav-mobile-cta { display: inline-flex; }
   /* Stack split columns */
-  #mz-page .mz-split       { grid-template-columns: 1fr; gap: 28px; }
+  #mz-page .mz-split       { grid-template-columns: 1fr; gap: 0; }
   #mz-page .mz-split.rev .mz-img-col,
   #mz-page .mz-split.rev .mz-txt-col { order: unset; }
+  /* Hide desktop image columns, show mobile inline images */
+  #mz-page .mz-img-col     { display: none; }
+  #mz-page .mz-img-col-mobile { display: block; }
   /* Single column grids */
   #mz-page .mz-why-grid    { grid-template-columns: 1fr; }
   #mz-page .mz-reviews-grid{ grid-template-columns: 1fr; }
@@ -664,12 +682,15 @@ var MEZTIZO_CONFIG = {
         El Paso's Most Trusted Kitchen &amp; Bathroom Remodeling Experts,<br>
         Now Offering Flexible Financing So You Can Start Today.
       </p>
-      <p class="mz-hero-body">
-        At Meztizo, we turn outdated kitchens and bathrooms into spaces you'll never want to leave.
-        Locally rooted in El Paso and Las Cruces, we combine premium craftsmanship, personalized design,
-        and a completely stress-free process, all backed by financing options that make your dream remodel
-        possible right now, not someday.
-      </p>
+      <div class="mz-sec-img-wrap mz-hero-img">
+        <div class="mz-img-ph" id="mz-img-hero">
+          <span class="ph-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          </span>
+          <div class="ph-tag">Photo Placeholder</div>
+          <div class="ph-desc">Your dream kitchen or bathroom, beautifully transformed by Meztizo</div>
+        </div>
+      </div>
       <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
         Get My Free Consultation, Zero Obligation
       </button>
@@ -737,6 +758,16 @@ var MEZTIZO_CONFIG = {
           </span>
           <h2>The Kitchen Your Family Deserves.</h2>
           <div class="mz-bar"></div>
+          <!-- Mobile-only image: shown after h2 on small screens -->
+          <div class="mz-img-col-mobile">
+            <div class="mz-img-ph" id="mz-img-kitchen-m">
+              <span class="ph-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/></svg>
+              </span>
+              <div class="ph-tag">Photo Placeholder</div>
+              <div class="ph-desc">Stunning kitchen remodel, showroom-quality finish</div>
+            </div>
+          </div>
           <div class="mz-offer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2.18c.07-.31.18-.62.18-.96C18 3.36 16.64 2 15 2c-.95 0-1.78.46-2.27 1.16L12 4.33l-.73-1.17C10.78 2.46 9.95 2 9 2 7.36 2 6 3.36 6 5.04c0 .34.11.65.18.96H4c-1.11 0-2 .89-2 2v3c0 .55.45 1 1 1h1v7c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2v-7h1c.55 0 1-.45 1-1V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1.04C16 5.6 15.6 6 15 6h-2l1.61-1.79c.18-.21.24-.21.39-.21zm-6 0c.15 0 .21 0 .39.21L11 6H9c-.6 0-1-.4-1-.96C8 4.45 8.45 4 9 4zM4 8h7v3H4V8zm2 11v-7h5v7H6zm12 0h-5v-7h5v7zm2-10h-7V8h7v3z"/></svg>
             FREE Premium Countertop With Every Full Kitchen Remodel
@@ -765,7 +796,7 @@ var MEZTIZO_CONFIG = {
             <span><strong>LIMITED AVAILABILITY:</strong> We only take on a select number of kitchen remodels per month to protect quality. This free countertop offer won't last forever.</span>
           </div>
           <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
-            Claim My Free Kitchen Consultation + Free Countertop
+            Get My Free Consultation, Zero Obligation
           </button>
           <div class="mz-trust-micro">
             <span>Financing Available</span>
@@ -790,6 +821,16 @@ var MEZTIZO_CONFIG = {
           </span>
           <h2>Turn Your Bathroom Into a Personal Sanctuary.</h2>
           <div class="mz-bar"></div>
+          <!-- Mobile-only image: shown after h2 on small screens -->
+          <div class="mz-img-col-mobile">
+            <div class="mz-img-ph" id="mz-img-bathroom-m">
+              <span class="ph-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/></svg>
+              </span>
+              <div class="ph-tag">Photo Placeholder</div>
+              <div class="ph-desc">Spa-style bathroom transformation, luxury tile &amp; fixture work</div>
+            </div>
+          </div>
           <div class="mz-offer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-2.18c.07-.31.18-.62.18-.96C18 3.36 16.64 2 15 2c-.95 0-1.78.46-2.27 1.16L12 4.33l-.73-1.17C10.78 2.46 9.95 2 9 2 7.36 2 6 3.36 6 5.04c0 .34.11.65.18.96H4c-1.11 0-2 .89-2 2v3c0 .55.45 1 1 1h1v7c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2v-7h1c.55 0 1-.45 1-1V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1.04C16 5.6 15.6 6 15 6h-2l1.61-1.79c.18-.21.24-.21.39-.21zm-6 0c.15 0 .21 0 .39.21L11 6H9c-.6 0-1-.4-1-.96C8 4.45 8.45 4 9 4zM4 8h7v3H4V8zm2 11v-7h5v7H6zm12 0h-5v-7h5v7zm2-10h-7V8h7v3z"/></svg>
             FREE Sink With Every Full Bathroom Remodel, Limited Time
@@ -818,7 +859,7 @@ var MEZTIZO_CONFIG = {
             <span>We only accept a limited number of bathroom remodels each month. The free sink offer expires when spots are gone.</span>
           </div>
           <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
-            Book My Free Bathroom Consultation + Free Sink
+            Get My Free Consultation, Zero Obligation
           </button>
           <div class="mz-trust-micro">
             <span>Financing Available</span>
@@ -874,7 +915,7 @@ var MEZTIZO_CONFIG = {
       </div>
       <div style="text-align:center;">
         <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
-          Discuss My Project with the Meztizo Team
+          Get My Free Consultation, Zero Obligation
         </button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
           <span>One Contractor</span>
@@ -955,7 +996,7 @@ var MEZTIZO_CONFIG = {
         </div>
       </div>
       <div style="text-align:center;margin-top:40px;">
-        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">See What Meztizo Can Do For Your Home</button>
+        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">Get My Free Consultation, Zero Obligation</button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
           <span>Free Consultation</span>
           <span class="mz-dot"></span>
@@ -975,15 +1016,6 @@ var MEZTIZO_CONFIG = {
         <h2>Don't Take Our Word for It.</h2>
         <div class="mz-bar center"></div>
         <p>Here's what our clients say after we transform their homes.</p>
-      </div>
-      <div class="mz-sec-img-wrap">
-        <div class="mz-img-ph" id="mz-img-reviews">
-          <span class="ph-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </span>
-          <div class="ph-tag">Photo Placeholder</div>
-          <div class="ph-desc">Happy homeowners, real El Paso transformations</div>
-        </div>
       </div>
       <div class="mz-reviews-grid">
         <div class="mz-rev-card">
@@ -1012,7 +1044,7 @@ var MEZTIZO_CONFIG = {
         </div>
       </div>
       <div style="text-align:center;margin-top:40px;">
-        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">Join Hundreds of Happy El Paso Homeowners</button>
+        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">Get My Free Consultation, Zero Obligation</button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
           <span>Book Your Free Consultation</span>
           <span class="mz-dot"></span>
@@ -1029,15 +1061,6 @@ var MEZTIZO_CONFIG = {
     <div class="mz-wrap">
       <div class="mz-comm-inner">
         <span class="mz-pill">Community</span>
-        <div class="mz-sec-img-wrap" style="margin-top:8px;">
-          <div class="mz-img-ph" id="mz-img-community">
-            <span class="ph-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-            </span>
-            <div class="ph-tag">Photo Placeholder</div>
-            <div class="ph-desc">Giving back to El Paso, community events and local support</div>
-          </div>
-        </div>
         <h2>Proudly Serving, and Giving Back to, El Paso.</h2>
         <div class="mz-bar center"></div>
         <p style="margin-top:16px;margin-bottom:30px;">
@@ -1062,15 +1085,6 @@ var MEZTIZO_CONFIG = {
           That's why Meztizo offers flexible financing options designed to make your remodel accessible, affordable,
           and completely stress-free.
         </p>
-      </div>
-      <div class="mz-sec-img-wrap">
-        <div class="mz-img-ph" id="mz-img-financing">
-          <span class="ph-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-          </span>
-          <div class="ph-tag">Photo Placeholder</div>
-          <div class="ph-desc">Flexible financing, your dream remodel starts now</div>
-        </div>
       </div>
       <div class="mz-fin-cards" style="position:relative;z-index:2;">
         <div class="mz-fin-card">
@@ -1097,7 +1111,7 @@ var MEZTIZO_CONFIG = {
       </div>
       <div style="text-align:center;position:relative;z-index:2;">
         <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
-          Get Financing Details in My Free Consultation
+          Get My Free Consultation, Zero Obligation
         </button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:16px;">
           <span>No Obligation</span>
@@ -1121,7 +1135,7 @@ var MEZTIZO_CONFIG = {
         clear plan to bring your vision to life. Financing is available, so there's no reason to put it off any longer.
       </p>
       <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
-        Schedule My Free Consultation, It Takes Less Than 60 Seconds
+        Get My Free Consultation, Zero Obligation
       </button>
       <div class="mz-trust-row">
         <span>Financing Available</span>
@@ -1140,6 +1154,7 @@ var MEZTIZO_CONFIG = {
       <p class="mz-ft-tag">El Paso's Most Trusted Kitchen &amp; Bathroom Remodeling Contractor based in El Paso and Las Cruces.</p>
     </div>
     <p class="mz-ft-copy">© <span id="mz-year"></span> Meztizo. All rights reserved. El Paso, TX &amp; Las Cruces, NM.</p>
+    <p class="mz-ft-terms">*Terms and conditions apply. FREE Premium Countertop offer valid on full kitchen remodels only. FREE Sink offer valid on full bathroom remodels only. Offers subject to availability and may change without notice.</p>
   </footer>
 
 </div><!-- end #mz-page -->
@@ -1168,13 +1183,13 @@ var MEZTIZO_CONFIG = {
     el.classList.add('has-image');
     el.appendChild(img);
   }
+  mzSetImage('mz-img-hero',      MEZTIZO_CONFIG.IMAGES.HERO);
   mzSetImage('mz-img-kitchen',   MEZTIZO_CONFIG.IMAGES.KITCHEN);
+  mzSetImage('mz-img-kitchen-m', MEZTIZO_CONFIG.IMAGES.KITCHEN);
   mzSetImage('mz-img-bathroom',  MEZTIZO_CONFIG.IMAGES.BATHROOM);
+  mzSetImage('mz-img-bathroom-m',MEZTIZO_CONFIG.IMAGES.BATHROOM);
   mzSetImage('mz-img-services',  MEZTIZO_CONFIG.IMAGES.SERVICES);
   mzSetImage('mz-img-why',       MEZTIZO_CONFIG.IMAGES.WHY);
-  mzSetImage('mz-img-reviews',   MEZTIZO_CONFIG.IMAGES.REVIEWS);
-  mzSetImage('mz-img-community', MEZTIZO_CONFIG.IMAGES.COMMUNITY);
-  mzSetImage('mz-img-financing', MEZTIZO_CONFIG.IMAGES.FINANCING);
 
   /* ── Dynamic year ── */
   var yr = document.getElementById('mz-year');
