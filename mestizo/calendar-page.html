@@ -1,0 +1,419 @@
+<!--
+╔═══════════════════════════════════════════════════════════════════════════╗
+║             MEZTIZO — CALENDAR / BOOKING PAGE · CONFIGURATION            ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║  ONLY edit the values inside MEZTIZO_CONFIG below.                        ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║                                                                           ║
+║  LANDING_URL   →  URL of the main landing page (for logo link)           ║
+║  THANKYOU_URL  →  URL of the Thank You page                              ║
+║                                                                           ║
+║  CALENDAR_EMBED_HTML                                                      ║
+║  ───────────────────────────────────────────────────────────────────────  ║
+║  Paste your GHL / Calendly embed code as a string inside backticks.      ║
+║  The placeholder below will be replaced with your embed automatically.   ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+-->
+<script>
+var MEZTIZO_CONFIG = {
+
+  /* ── Step 1: Page URLs ─────────────────────────────── */
+  LANDING_URL:   "/",              /* ← Main landing page URL    */
+  THANKYOU_URL:  "/thank-you",     /* ← Thank You page URL       */
+
+  /* ── Step 2: Paste your calendar embed HTML here ───── */
+  /* Example for GHL: '<iframe src="https://..." ...></iframe>'  */
+  /* Example for Calendly: the script + div snippet             */
+  CALENDAR_EMBED_HTML: "",         /* ← PASTE EMBED CODE HERE   */
+
+};
+</script>
+
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MEZTIZO — CALENDAR PAGE STYLES  (scoped inside #mz-cal)
+   ═══════════════════════════════════════════════════════════════ */
+
+#mz-cal *, #mz-cal *::before, #mz-cal *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+
+#mz-cal {
+  --gold:        #C8A84B;
+  --gold-lt:     #E5C96F;
+  --gold-dk:     #9A7A2A;
+  --gold-grd:    linear-gradient(135deg, #9A7A2A 0%, #C8A84B 35%, #E5C96F 60%, #C8A84B 80%, #9A7A2A 100%);
+  --bg0:         #06060A;
+  --bg1:         #0A0A10;
+  --bg2:         #0F0F18;
+  --bgcard:      #0C0C14;
+  --txt1:        #F5F0E6;
+  --txt2:        #B0A898;
+  --txt3:        #6A625A;
+  --bdr:         rgba(200,168,75,.12);
+  --bdr2:        rgba(200,168,75,.28);
+  --sdw-g:       0 8px 40px rgba(200,168,75,.22);
+  --rad:         12px;
+  --rad-lg:      20px;
+  --ease:        all .3s cubic-bezier(.4,0,.2,1);
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px; line-height: 1.6;
+  color: var(--txt1); background: var(--bg0);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#mz-cal h1, #mz-cal h2, #mz-cal h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700; line-height: 1.15; color: var(--txt1);
+}
+#mz-cal h1 { font-size: clamp(2rem,4.5vw,3.6rem); }
+#mz-cal h2 { font-size: clamp(1.6rem,3vw,2.4rem); }
+#mz-cal h3 { font-size: clamp(1.1rem,2vw,1.5rem); }
+#mz-cal p  { color: var(--txt2); line-height: 1.8; }
+#mz-cal a  { color: var(--gold); text-decoration: none; transition: var(--ease); }
+
+#mz-cal .mz-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* BUTTONS */
+#mz-cal .mz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; text-decoration: none;
+  border: none; border-radius: 6px; cursor: pointer;
+  transition: var(--ease); -webkit-appearance: none; appearance: none;
+}
+#mz-cal .mz-btn-ghost {
+  background: transparent; color: var(--gold);
+  border: 1px solid var(--bdr2);
+  font-size: .78rem; padding: 11px 22px;
+}
+#mz-cal .mz-btn-ghost:hover {
+  border-color: var(--gold); background: rgba(200,168,75,.08); color: var(--gold-lt);
+}
+
+/* ── MINI NAV ── */
+#mz-cal-nav {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(6,6,10,.94);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--bdr);
+  padding: 0 24px;
+}
+#mz-cal-nav .mz-nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+#mz-cal-nav .mz-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+  background: var(--gold-grd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#mz-cal-nav .mz-step-label {
+  font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--txt3);
+}
+
+/* ── PROGRESS BAR ── */
+#mz-cal-progress {
+  height: 3px; background: var(--bg2);
+  position: relative;
+}
+#mz-cal-progress .mz-progress-fill {
+  height: 100%; width: 66%;
+  background: var(--gold-grd);
+  transition: width .6s ease;
+}
+#mz-cal-progress .mz-progress-steps {
+  display: flex; justify-content: center; gap: 32px;
+  padding: 14px 24px;
+  background: var(--bg1); border-bottom: 1px solid var(--bdr);
+}
+#mz-cal-progress .mz-pstep {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txt3);
+}
+#mz-cal-progress .mz-pstep.done  { color: var(--gold-lt); }
+#mz-cal-progress .mz-pstep.active{ color: var(--gold); }
+#mz-cal-progress .mz-pstep .ps-num {
+  width: 22px; height: 22px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem;
+}
+#mz-cal-progress .mz-pstep.done .ps-num  { background: rgba(200,168,75,.15); border-color: var(--gold); color: var(--gold); }
+#mz-cal-progress .mz-pstep.active .ps-num{ background: var(--gold-grd); border-color: transparent; color: #120E00; }
+
+/* ── HERO AREA ── */
+#mz-cal-hero {
+  background: var(--bg0); position: relative; overflow: hidden;
+  padding: 70px 24px 60px;
+  text-align: center;
+}
+#mz-cal-hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(200,168,75,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,168,75,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+#mz-cal-hero::after {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 500px; pointer-events: none;
+  background: radial-gradient(ellipse, rgba(200,168,75,.08) 0%, transparent 68%);
+}
+#mz-cal-hero .mz-cal-hero-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+#mz-cal-hero .mz-success-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px;
+  background: rgba(200,168,75,.1); border: 1px solid var(--bdr2);
+  border-radius: 50%; font-size: 2.2rem; margin-bottom: 22px;
+}
+#mz-cal-hero .mz-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--gold-lt); border: 1px solid var(--bdr2);
+  padding: 6px 18px; border-radius: 100px; background: rgba(200,168,75,.07);
+  margin-bottom: 18px;
+}
+#mz-cal-hero h1 { margin-bottom: 18px; }
+#mz-cal-hero h1 .gold-text {
+  background: var(--gold-grd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#mz-cal-hero p {
+  font-size: 1.02rem; max-width: 600px; margin: 0 auto; color: var(--txt2); line-height: 1.8;
+}
+
+/* ── MAIN CONTENT ── */
+#mz-cal-body {
+  background: var(--bg1); padding: 60px 24px 80px;
+}
+#mz-cal-body .mz-cal-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start;
+}
+
+/* ── WHAT HAPPENS SIDEBAR ── */
+#mz-cal-sidebar h3 {
+  font-size: 1.1rem; margin-bottom: 24px; color: var(--txt1);
+}
+#mz-cal-sidebar .mz-what-list {
+  list-style: none; display: flex; flex-direction: column; gap: 18px;
+}
+#mz-cal-sidebar .mz-what-list li {
+  display: flex; align-items: flex-start; gap: 14px;
+  font-size: .9rem; color: var(--txt2); line-height: 1.6;
+}
+#mz-cal-sidebar .mz-what-list li::before {
+  content: '✓';
+  display: flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px;
+  background: rgba(200,168,75,.1); border: 1px solid var(--bdr2);
+  border-radius: 50%; font-size: .65rem; font-weight: 700; color: var(--gold);
+  margin-top: 1px; flex-shrink: 0;
+}
+#mz-cal-sidebar .mz-what-list li strong { color: var(--txt1); }
+
+#mz-cal-sidebar .mz-trust-badge {
+  background: var(--bgcard); border: 1px solid var(--bdr);
+  border-radius: var(--rad); padding: 20px 18px;
+  margin-top: 28px;
+}
+#mz-cal-sidebar .mz-trust-badge .tb-title {
+  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold-dk); margin-bottom: 12px;
+}
+#mz-cal-sidebar .mz-trust-badge .tb-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .82rem; color: var(--txt3); padding: 5px 0;
+}
+#mz-cal-sidebar .mz-trust-badge .tb-icon { color: var(--gold); font-size: .85rem; }
+
+/* ── CALENDAR EMBED AREA ── */
+#mz-cal-embed-wrap {
+  background: var(--bgcard); border: 1px solid var(--bdr);
+  border-radius: var(--rad-lg); overflow: hidden;
+  position: relative;
+}
+#mz-cal-embed-wrap::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold-grd);
+}
+#mz-cal-embed-inner {
+  padding: 0; min-height: 580px;
+  display: flex; align-items: center; justify-content: center;
+}
+#mz-cal-embed-inner .mz-embed-placeholder {
+  text-align: center; padding: 48px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+#mz-cal-embed-inner .mz-embed-placeholder .ep-icon { font-size: 3.5rem; opacity: .25; }
+#mz-cal-embed-inner .mz-embed-placeholder .ep-tag {
+  font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold-dk);
+}
+#mz-cal-embed-inner .mz-embed-placeholder h3 { font-size: 1.3rem; color: var(--txt2); font-family: 'Inter', sans-serif; font-weight: 600; }
+#mz-cal-embed-inner .mz-embed-placeholder p { font-size: .85rem; color: var(--txt3); max-width: 280px; }
+
+/* ── FOOTER ── */
+#mz-cal-footer {
+  background: #040407; border-top: 1px solid var(--bdr);
+  padding: 28px 24px; text-align: center;
+}
+#mz-cal-footer .mz-ft-logo {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase;
+  background: var(--gold-grd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: block; margin-bottom: 6px;
+}
+#mz-cal-footer p { font-size: .75rem; color: var(--txt3); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  #mz-cal-body .mz-cal-grid { grid-template-columns: 1fr; gap: 36px; }
+  #mz-cal-sidebar { order: 2; }
+  #mz-cal-embed-wrap { order: 1; }
+  #mz-cal-progress .mz-progress-steps { gap: 16px; }
+}
+@media (max-width: 480px) {
+  #mz-cal-hero { padding: 52px 20px 44px; }
+  #mz-cal-body  { padding: 44px 20px 60px; }
+  #mz-cal-progress .mz-progress-steps { gap: 10px; }
+  #mz-cal-progress .mz-pstep span { display: none; }
+}
+</style>
+
+<div id="mz-cal">
+
+  <!-- ╔═══ NAV ═══╗ -->
+  <nav id="mz-cal-nav">
+    <div class="mz-nav-inner">
+      <a class="mz-logo" id="mz-cal-logo-link">Meztizo</a>
+      <span class="mz-step-label">Step 2 of 2 — Book Your Call</span>
+    </div>
+  </nav>
+
+  <!-- ── PROGRESS ── -->
+  <div id="mz-cal-progress">
+    <div class="mz-progress-fill"></div>
+    <div class="mz-progress-steps">
+      <div class="mz-pstep done">
+        <div class="ps-num">✓</div>
+        <span>Your Details</span>
+      </div>
+      <div class="mz-pstep active">
+        <div class="ps-num">2</div>
+        <span>Pick a Time</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ╔═══ HERO ═══╗ -->
+  <section id="mz-cal-hero">
+    <div class="mz-cal-hero-inner">
+      <div class="mz-success-icon">✅</div>
+      <div class="mz-pill">Almost There!</div>
+      <h1>
+        Final Step: Schedule Your<br>
+        <span class="gold-text">Free Consultation.</span>
+      </h1>
+      <p>
+        You're one step away from getting the kitchen, bathroom, or home of your dreams.
+        Use the calendar below to pick a time that works best for you — our team is ready to listen, plan, and get to work.
+      </p>
+    </div>
+  </section>
+
+  <!-- ╔═══ BODY ═══╗ -->
+  <div id="mz-cal-body">
+    <div class="mz-cal-grid">
+
+      <!-- Sidebar -->
+      <aside id="mz-cal-sidebar">
+        <h3>What Happens on the Call</h3>
+        <ul class="mz-what-list">
+          <li>
+            <span><strong>We listen</strong> — You tell us about your project, vision, and timeline.</span>
+          </li>
+          <li>
+            <span><strong>We advise</strong> — We share ideas, options, and what's possible within your budget.</span>
+          </li>
+          <li>
+            <span><strong>We explain financing</strong> — We'll walk you through every payment plan option available to you.</span>
+          </li>
+          <li>
+            <span><strong>Zero pressure</strong> — This is your consultation, not a sales pitch. Come with questions.</span>
+          </li>
+        </ul>
+        <div class="mz-trust-badge">
+          <div class="tb-title">You're in Good Hands</div>
+          <div class="tb-item"><span class="tb-icon">⭐</span> El Paso's #1 Rated Contractor</div>
+          <div class="tb-item"><span class="tb-icon">🔒</span> 100% No-Pressure Guarantee</div>
+          <div class="tb-item"><span class="tb-icon">💰</span> Financing Options Available</div>
+          <div class="tb-item"><span class="tb-icon">📞</span> Real People, Real Answers</div>
+        </div>
+      </aside>
+
+      <!-- Calendar Embed -->
+      <div id="mz-cal-embed-wrap">
+        <div id="mz-cal-embed-inner">
+          <!-- Embed code injected by script below, or shows placeholder -->
+          <div class="mz-embed-placeholder" id="mz-embed-placeholder">
+            <div class="ep-icon">📅</div>
+            <div class="ep-tag">Calendar Embed</div>
+            <h3>Your booking calendar<br>will appear here</h3>
+            <p>Paste your GHL or Calendly embed code into MEZTIZO_CONFIG.CALENDAR_EMBED_HTML above</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ╔═══ FOOTER ═══╗ -->
+  <footer id="mz-cal-footer">
+    <span class="mz-ft-logo">Meztizo</span>
+    <p>El Paso's Most Trusted Kitchen &amp; Bathroom Remodeling Contractor · El Paso, TX &amp; Las Cruces, NM</p>
+    <p style="margin-top:6px;">© 2025 Meztizo. All rights reserved.</p>
+  </footer>
+
+</div><!-- end #mz-cal -->
+
+<script>
+(function() {
+  /* ── Set logo link ── */
+  var logoLink = document.getElementById('mz-cal-logo-link');
+  if (logoLink) logoLink.href = MEZTIZO_CONFIG.LANDING_URL;
+
+  /* ── Inject calendar embed if provided ── */
+  var embedHtml = MEZTIZO_CONFIG.CALENDAR_EMBED_HTML;
+  var embedInner = document.getElementById('mz-cal-embed-inner');
+  var placeholder = document.getElementById('mz-embed-placeholder');
+  if (embedHtml && embedHtml.trim() !== '' && embedInner) {
+    embedInner.innerHTML = embedHtml;
+    /* make embed fill container */
+    embedInner.style.display = 'block';
+    embedInner.style.padding = '0';
+    var iframes = embedInner.querySelectorAll('iframe');
+    iframes.forEach(function(f) {
+      f.style.width = '100%';
+      f.style.minHeight = '580px';
+      f.style.border = 'none';
+      f.style.display = 'block';
+    });
+  }
+})();
+</script>
