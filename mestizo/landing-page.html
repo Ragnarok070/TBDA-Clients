@@ -6,10 +6,9 @@
 ║  Everything else on the page updates automatically.                       ║
 ╠═══════════════════════════════════════════════════════════════════════════╣
 ║                                                                           ║
-║  GHL_POPUP_CLASS  →  In GHL › Funnels/Sites › [Page] › Popup Forms      ║
-║                       set Trigger Type to "CSS Selector". GHL shows       ║
-║                       you a class (e.g. "hl_popup_trigger_abc123").       ║
-║                       Paste that class below. All CTA buttons update.     ║
+║  GHL_SURVEY_URL  →  Your GHL survey embed URL. Paste the full URL         ║
+║                      below. It loads inside the consultation modal when    ║
+║                      any CTA button is clicked.                            ║
 ║                                                                           ║
 ║  CALENDAR_URL     →  URL slug for your Calendar page                      ║
 ║  THANKYOU_URL     →  URL slug for your Thank You page                     ║
@@ -22,8 +21,8 @@
 <script>
 var MEZTIZO_CONFIG = {
 
-  /* ── Step 1: Paste your GHL popup CSS trigger class here ──── */
-  GHL_POPUP_CLASS: "hl_popup_trigger",       /* ← CHANGE THIS  */
+  /* ── Step 1: Paste your GHL Survey URL here ─────────────── */
+  GHL_SURVEY_URL: "https://link.trulybedesiredagency.com/widget/survey/Z3wwlYHOEf9V2FkJTCM7",
 
   /* ── Step 2: Set your page URLs ─────────────────────────── */
   CALENDAR_URL:   "/calendar",               /* ← CHANGE THIS  */
@@ -644,6 +643,65 @@ var MEZTIZO_CONFIG = {
   #mz-page .mz-sec-img-wrap .mz-img-ph { aspect-ratio: 4/3; }
   #mz-cta-final .mz-trust-row { flex-direction: column; gap: 8px; }
 }
+
+/* ══════════  MODAL  ══════════ */
+#mz-modal {
+  display: none;
+  position: fixed; inset: 0; z-index: 99999;
+  place-items: center;
+  background: rgba(4,13,28,.78);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  padding: 20px;
+  overflow-y: auto;
+}
+#mz-modal[aria-hidden="false"] { display: grid; }
+
+#mz-modal-dialog {
+  position: relative;
+  background: var(--bg1);
+  border: 1px solid var(--bdr2);
+  border-radius: var(--rad-lg);
+  width: 100%; max-width: 680px;
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.7), var(--sdw-g);
+  display: flex; flex-direction: column;
+}
+#mz-modal-dialog::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold-grd); z-index: 1;
+}
+#mz-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+}
+#mz-modal-header .mz-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--txt1);
+}
+#mz-modal-close {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(200,168,75,.08); border: 1px solid var(--bdr2);
+  border-radius: 50%; cursor: pointer; color: var(--txt3);
+  transition: var(--ease); -webkit-appearance: none; appearance: none;
+}
+#mz-modal-close:hover { background: rgba(200,168,75,.18); color: var(--gold); border-color: var(--gold); }
+#mz-modal-body {
+  flex: 1; overflow-y: auto;
+}
+#mz-modal-body iframe {
+  display: block; width: 100%; min-height: 540px; border: none;
+}
+@media (max-width: 600px) {
+  #mz-modal                    { padding: 12px; align-items: flex-start; }
+  #mz-modal-dialog             { max-height: calc(100vh - 24px); border-radius: 12px; }
+  #mz-modal-header             { padding: 16px 18px 14px; }
+  #mz-modal-header .mz-modal-title { font-size: 1rem; }
+  #mz-modal-body iframe        { min-height: 480px; }
+}
 </style>
 
 <!-- ═══════════════════════════════════════════════════
@@ -662,8 +720,8 @@ var MEZTIZO_CONFIG = {
         <li><a href="#mz-reviews">Reviews</a></li>
         <li><a href="#mz-financing">Financing</a></li>
       </ul>
-      <button class="mz-btn mz-btn-gold mz-nav-btn mz-cta-popup">Free Consultation</button>
-      <button class="mz-btn mz-btn-gold mz-nav-mobile-cta mz-cta-popup">Get My Free<br>Consultation</button>
+      <button class="mz-btn mz-btn-gold mz-nav-btn js-open-modal">Free Consultation</button>
+      <button class="mz-btn mz-btn-gold mz-nav-mobile-cta js-open-modal">Get My Free<br>Consultation</button>
     </div>
   </nav>
 
@@ -691,7 +749,7 @@ var MEZTIZO_CONFIG = {
           <div class="ph-desc">Your dream kitchen or bathroom, beautifully transformed by Meztizo</div>
         </div>
       </div>
-      <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
+      <button class="mz-btn mz-btn-gold mz-btn-xl js-open-modal">
         Get My Free Consultation, Zero Obligation
       </button>
       <div class="mz-hero-trust">
@@ -795,7 +853,7 @@ var MEZTIZO_CONFIG = {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
             <span><strong>LIMITED AVAILABILITY:</strong> We only take on a select number of kitchen remodels per month to protect quality. This free countertop offer won't last forever.</span>
           </div>
-          <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
+          <button class="mz-btn mz-btn-gold mz-btn-lg js-open-modal">
             Get My Free Consultation, Zero Obligation
           </button>
           <div class="mz-trust-micro">
@@ -858,7 +916,7 @@ var MEZTIZO_CONFIG = {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
             <span>We only accept a limited number of bathroom remodels each month. The free sink offer expires when spots are gone.</span>
           </div>
-          <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
+          <button class="mz-btn mz-btn-gold mz-btn-lg js-open-modal">
             Get My Free Consultation, Zero Obligation
           </button>
           <div class="mz-trust-micro">
@@ -914,7 +972,7 @@ var MEZTIZO_CONFIG = {
         <div class="mz-svc-tag">Repairs</div>
       </div>
       <div style="text-align:center;">
-        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">
+        <button class="mz-btn mz-btn-gold mz-btn-lg js-open-modal">
           Get My Free Consultation, Zero Obligation
         </button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
@@ -996,7 +1054,7 @@ var MEZTIZO_CONFIG = {
         </div>
       </div>
       <div style="text-align:center;margin-top:40px;">
-        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">Get My Free Consultation, Zero Obligation</button>
+        <button class="mz-btn mz-btn-gold mz-btn-lg js-open-modal">Get My Free Consultation, Zero Obligation</button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
           <span>Free Consultation</span>
           <span class="mz-dot"></span>
@@ -1044,7 +1102,7 @@ var MEZTIZO_CONFIG = {
         </div>
       </div>
       <div style="text-align:center;margin-top:40px;">
-        <button class="mz-btn mz-btn-gold mz-btn-lg mz-cta-popup">Get My Free Consultation, Zero Obligation</button>
+        <button class="mz-btn mz-btn-gold mz-btn-lg js-open-modal">Get My Free Consultation, Zero Obligation</button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:14px;">
           <span>Book Your Free Consultation</span>
           <span class="mz-dot"></span>
@@ -1110,7 +1168,7 @@ var MEZTIZO_CONFIG = {
         </div>
       </div>
       <div style="text-align:center;position:relative;z-index:2;">
-        <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
+        <button class="mz-btn mz-btn-gold mz-btn-xl js-open-modal">
           Get My Free Consultation, Zero Obligation
         </button>
         <div class="mz-trust-micro" style="justify-content:center;margin-top:16px;">
@@ -1134,7 +1192,7 @@ var MEZTIZO_CONFIG = {
         No pressure. No obligation. Just a real talk with El Paso's most trusted remodeling team, and a
         clear plan to bring your vision to life. Financing is available, so there's no reason to put it off any longer.
       </p>
-      <button class="mz-btn mz-btn-gold mz-btn-xl mz-cta-popup">
+      <button class="mz-btn mz-btn-gold mz-btn-xl js-open-modal">
         Get My Free Consultation, Zero Obligation
       </button>
       <div class="mz-trust-row">
@@ -1157,6 +1215,24 @@ var MEZTIZO_CONFIG = {
     <p class="mz-ft-terms">*Terms and conditions apply. FREE Premium Countertop offer valid on full kitchen remodels only. FREE Sink offer valid on full bathroom remodels only. Offers subject to availability and may change without notice.</p>
   </footer>
 
+
+  <!-- ╔═══════════ CONSULTATION MODAL ═══════════╗ -->
+  <div id="mz-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="mz-modal-label">
+    <div id="mz-modal-dialog">
+      <div id="mz-modal-header">
+        <span class="mz-modal-title" id="mz-modal-label">Get Your Free Consultation</span>
+        <button id="mz-modal-close" class="js-close-modal" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="mz-modal-body">
+        <iframe src="https://link.trulybedesiredagency.com/widget/survey/Z3wwlYHOEf9V2FkJTCM7" style="border:none;width:100%;" scrolling="no" id="Z3wwlYHOEf9V2FkJTCM7" title="survey"></iframe>
+      </div>
+    </div>
+  </div>
+
 </div><!-- end #mz-page -->
 
 <!-- ═══════════════════════════════════════════════════
@@ -1165,10 +1241,38 @@ var MEZTIZO_CONFIG = {
 <script>
 (function() {
 
-  /* ── Apply GHL popup trigger class to all CTA buttons ── */
-  var cls = MEZTIZO_CONFIG.GHL_POPUP_CLASS;
-  document.querySelectorAll('#mz-page .mz-cta-popup').forEach(function(el) {
-    if (cls) el.classList.add(cls);
+  /* ── Modal open / close ── */
+  var modal   = document.getElementById('mz-modal');
+  var scrollY = 0;
+
+  function openModal() {
+    scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top      = '-' + scrollY + 'px';
+    document.body.style.width    = '100%';
+    modal.setAttribute('aria-hidden', 'false');
+    var closeBtn = document.getElementById('mz-modal-close');
+    if (closeBtn) closeBtn.focus();
+  }
+  function closeModal() {
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.width    = '';
+    window.scrollTo(0, scrollY);
+  }
+
+  document.querySelectorAll('.js-open-modal').forEach(function(el) {
+    el.addEventListener('click', openModal);
+  });
+  document.querySelectorAll('.js-close-modal').forEach(function(el) {
+    el.addEventListener('click', closeModal);
+  });
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
   });
 
   /* ── Apply images from config ── */
@@ -1214,3 +1318,5 @@ var MEZTIZO_CONFIG = {
 
 })();
 </script>
+
+<script src="https://link.trulybedesiredagency.com/js/form_embed.js"></script>
