@@ -672,16 +672,18 @@ var MEZTIZO_CONFIG = {
   background: var(--gold-grd); z-index: 1;
 }
 #mz-modal-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 24px 16px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px 56px 16px;
   border-bottom: 1px solid var(--bdr);
-  flex-shrink: 0;
+  flex-shrink: 0; text-align: center;
 }
 #mz-modal-header .mz-modal-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.1rem; font-weight: 700; color: var(--txt1);
 }
 #mz-modal-close {
+  position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
   display: flex; align-items: center; justify-content: center;
   width: 36px; height: 36px; flex-shrink: 0;
   background: rgba(200,168,75,.08); border: 1px solid var(--bdr2);
